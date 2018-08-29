@@ -10,25 +10,25 @@ import com.business.util.Page;
 public class ProductsDao extends BaseDao implements ProductsDaoInterface{
 
 	@Override
-	public int insertProducts(Connection conn, Products product) throws SQLException {
+	public int insertProducts(Connection conn, Products products) throws SQLException {
 		// TODO Auto-generated method stub
 		String sql = "insert into products(productID,product_name,income_price,prividerID,quantity,sales_price,categoryID,income_time)values(?,?,?,?,?,?,?,?)";
-		Object[] objs = {product.getProductID(),product.getProduct_name(),product.getIncome_price(),product.getProductID(),product.getQuantity(),product.getSales_price(),product.getCategoryID(),product.getIncome_time()};
+		Object[] objs = {products.getProductID(),products.getProduct_name(),products.getIncome_price(),products.getProductID(),products.getQuantity(),products.getSales_price(),products.getCategoryID(),products.getIncome_time()};
 		return super.updateDate(conn, sql, objs);
 	}
 
 	@Override
-	public int deleteProducts(Connection conn, Products product) throws SQLException {
+	public int deleteProducts(Connection conn, Products products) throws SQLException {
 		// TODO Auto-generated method stub
 		String sql = "delete from products where productID = ? ";
-		Object[] objs = {product.getProductID()};
+		Object[] objs = {products.getProductID()};
 		return super.updateDate(conn, sql, objs);
 	}
 
 	@Override
-	public int updateProducts(Connection conn, Products product) throws SQLException {
+	public int updateProducts(Connection conn, Products products) throws SQLException {
 		String sql = "update products set product_name = ? ,income_price = ? , providerID = ? , quantity = ?,sales_price = ? categoryID = ? ,income_time = ?";
-		Object[] objs = {product.getProduct_name(),product.getIncome_price(),product.getProductID(),product.getQuantity(),product.getSales_price(),product.getCategoryID() ,product.getIncome_time()};
+		Object[] objs = {products.getProduct_name(),products.getIncome_price(),products.getProductID(),products.getQuantity(),products.getSales_price(),products.getCategoryID() ,products.getIncome_time()};
 		return super.updateDate(conn, sql, objs);
 	}
 

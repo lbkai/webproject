@@ -10,11 +10,11 @@ import com.business.util.Page;
 public interface ProductsDaoInterface {
 	
 	//增加
-	public int insertProducts(Connection conn,Products product)throws SQLException;
+	public int insertProducts(Connection conn,Products products)throws SQLException;
 	//删除
-	public int deleteProducts(Connection conn,Products product)throws SQLException;
+	public int deleteProducts(Connection conn,Products products)throws SQLException;
 	//修改
-	public int updateProducts(Connection conn,Products product)throws SQLException;
+	public int updateProducts(Connection conn,Products products)throws SQLException;
 	//查找
 	public ResultSet selectAllProducts(Connection conn)throws SQLException;
 	//分页查找

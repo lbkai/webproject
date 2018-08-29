@@ -20,6 +20,66 @@ public class ProductsService implements ProductsServiceInterface{
 		pd = new ProductsDao();
 	}
 	
+
+	@Override
+	public boolean addProducts(Products products) {
+		boolean f = false;
+		Connection conn = DBHelper.getConnection();
+		try {
+			int i = pd.insertProducts(conn, products);
+			if(i>0){
+				f=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			pd.closeALL();
+		}
+		
+		return f;		
+	}
+	
+	@Override
+	public boolean removeProducts(Products products) {
+		// TODO Auto-generated method stub
+		Connection conn = DBHelper.getConnection();
+		boolean f = false;
+		try {
+			int i = pd.deleteProducts(conn, products);
+			if(i>1){
+				f = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			pd.closeALL();
+		}
+		return f;
+	}
+
+
+	@Override
+	public boolean updateProducts(Products products) {
+		// TODO Auto-generated method stub
+		Connection conn = DBHelper.getConnection();
+		boolean f = false;
+		try {
+			int i = pd.updateProducts(conn, products);
+			if(i>1){
+				f = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			pd.closeALL();
+		}
+		return f;
+	}
+
+	
 	@Override
 	public List<Products> findAllProducts() {
 		// TODO Auto-generated method stub
@@ -48,6 +108,8 @@ public class ProductsService implements ProductsServiceInterface{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			pd.closeALL();
 		}
 		
 		return list;
@@ -93,6 +155,5 @@ public class ProductsService implements ProductsServiceInterface{
 		}
 		return page;
 	}
-
 
 }
