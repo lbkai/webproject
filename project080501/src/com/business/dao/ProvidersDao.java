@@ -45,8 +45,8 @@ public class ProvidersDao extends BaseDao implements ProvidersDaoInterface {
 	@Override
 	public ResultSet selectProvidersById(Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
-		String sql = "select * from providers where ";
-		return null;
+		String sql = "select * from providers where providerID = ?";
+		return super.selectDate(conn, sql, null);
 	}
 	@Override
 	public ResultSet selectAllProvidersByPage(Connection conn, Page<Providers> page) throws SQLException {

@@ -16,7 +16,7 @@ public interface ProductsDaoInterface {
 	//修改
 	public int updateProducts(Connection conn,Products product)throws SQLException;
 	//查找
-	public ResultSet selectProductsByPage(Connection conn)throws SQLException;
+	public ResultSet selectAllProducts(Connection conn)throws SQLException;
 	//分页查找
 	public ResultSet selectAllProductsByPage(Connection conn,Page<Products> page)throws SQLException;
 	public int selectAllProductsRecored(Connection conn)throws SQLException;

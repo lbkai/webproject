@@ -4,10 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.xml.ws.spi.Provider;
-
 import com.business.entity.Products;
-import com.business.entity.Providers;
 import com.business.util.Page;
 
 public class ProductsDao extends BaseDao implements ProductsDaoInterface{
@@ -16,26 +13,33 @@ public class ProductsDao extends BaseDao implements ProductsDaoInterface{
 	public int insertProducts(Connection conn, Products product) throws SQLException {
 		// TODO Auto-generated method stub
 		String sql = "insert into products(productID,product_name,income_price,prividerID,quantity,sales_price,categoryID,income_time)values(?,?,?,?,?,?,?,?)";
-		Object[] objs = {product.getProductID(),product.getProduct_name(),product.getIncome_price(),};
+		Object[] objs = {product.getProductID(),product.getProduct_name(),product.getIncome_price(),product.getProductID(),product.getQuantity(),product.getSales_price(),product.getCategoryID(),product.getIncome_time()};
 		return super.updateDate(conn, sql, objs);
 	}
 
 	@Override
 	public int deleteProducts(Connection conn, Products product) throws SQLException {
 		// TODO Auto-generated method stub
-		return 0;
+		String sql = "delete from products where productID = ? ";
+		Object[] objs = {product.getProductID()};
+		return super.updateDate(conn, sql, objs);
 	}
 
 	@Override
 	public int updateProducts(Connection conn, Products product) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "update products set product_name = ? ,income_price = ? , providerID = ? , quantity = ?,sales_price = ? categoryID = ? ,income_time = ?";
+		Object[] objs = {product.getProduct_name(),product.getIncome_price(),product.getProductID(),product.getQuantity(),product.getSales_price(),product.getCategoryID() ,product.getIncome_time()};
+		return super.updateDate(conn, sql, objs);
 	}
 
 	@Override
-	public ResultSet selectProductsByPage(Connection conn) throws SQLException {
+	public ResultSet selectAllProducts(Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		String sql = "select p.*,c.category_name,pro.provider_name "+
+                " from products p,categorys c,providers pro "+
+                " where p.categoryID = c.categoryID and p.productID = pro.providerID ";
+		
+		return super.selectDate(conn, sql, null);
 	}
 
 	@Override

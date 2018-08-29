@@ -19,6 +19,40 @@ public class ProductsService implements ProductsServiceInterface{
 	public ProductsService(){
 		pd = new ProductsDao();
 	}
+	
+	@Override
+	public List<Products> findAllProducts() {
+		// TODO Auto-generated method stub
+		Connection conn = DBHelper.getConnection();
+		List<Products> list  = new ArrayList<Products>();
+		try {
+			ResultSet set = pd.selectAllProducts(conn);
+			while(set.next()){
+				int productID = set.getInt("productID");
+				String product_name = set.getString("product_name");
+				double income_price = set.getDouble("income_price");
+				
+				int providerID = set.getInt("providerID");
+				String provider_name = set.getString("provider_name");
+				
+				int quantity = set.getInt("quantity");
+				double sales_price = set.getDouble("sales_price");
+				
+				int categoryID = set.getInt("categoryID");
+				String category_name = set.getString("category_name");
+				String income_time = set.getString("income_time");
+				
+				list.add(new Products(productID, product_name, income_price, new Providers(providerID, provider_name), quantity, sales_price, new Categorys(categoryID, category_name), income_time));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
 	@Override
 	public Page<Products> findAllProductByPage(Page<Products> page) {
 		// TODO Auto-generated method stub
@@ -59,5 +93,6 @@ public class ProductsService implements ProductsServiceInterface{
 		}
 		return page;
 	}
+
 
 }

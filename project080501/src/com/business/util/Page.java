@@ -84,6 +84,12 @@ public class Page<T> {
 	public void setList(List<T> list) {
 		this.list = list;
 	}
+
+	@Override
+	public String toString() {
+		return "Page [currentPage=" + currentPage + ", pageSize=" + pageSize + ", totalRecord=" + totalRecord
+				+ ", list=" + list + "]";
+	}
 	
 	
 	
