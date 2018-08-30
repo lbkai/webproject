@@ -24,6 +24,20 @@ public class AdminDao extends BaseDao implements AdminDaoInterface{
 		Object[] objs = {admin.getAdmin_name(),admin.getAdmin_password()};	
 		return super.updateDate(conn, sql, objs);
 	}
+	
+	@Override
+	public int deleteAdmin(Connection conn, Admin admin) throws SQLException {
+		String sql = "delete from admin where admin_id = ? ";
+		Object[] objs = {admin.getAdmin_id()};
+		return super.updateDate(conn, sql, objs);
+	}
+
+	@Override
+	public int updateAdmin(Connection conn, Admin admin) throws SQLException {
+		String sql = "update  admin set admin_name = ? ,admin_password = ?,date = ? where admin_id = ?";
+		Object[] objs = {admin.getAdmin_name(),admin.getAdmin_password(),admin.getDate(),admin.getAdmin_id()};
+		return super.updateDate(conn, sql, objs);
+	}
 
 	@Override
 	public ResultSet selectAllAdmin(Connection conn) throws SQLException {
@@ -52,6 +66,8 @@ public class AdminDao extends BaseDao implements AdminDaoInterface{
 		}
 		return i;
 	}
+
+
 	
 	
 	

@@ -15,6 +15,11 @@ public class Page<T> {
 	
 	private List<T> list;
 	
+	public Page() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Page(int currentPage,int pageSize){
 		this.currentPage = currentPage;
 		this.pageSize = pageSize;

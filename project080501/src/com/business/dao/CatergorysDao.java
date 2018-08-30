@@ -17,9 +17,9 @@ public class CatergorysDao extends BaseDao implements CategorysDaoInterface {
 	}
 
 	@Override
-	public int deleteCategorys(Connection conn, Categorys categorys) throws SQLException {
+	public int deleteCategorysByCid(Connection conn, int cid) throws SQLException {
 		String sql = "delete from categorys where categoryID = ? ";
-		Object[] objs = {categorys.getCategoryID()};
+		Object[] objs = {cid};
 		return super.updateDate(conn, sql, objs);
 	}
 

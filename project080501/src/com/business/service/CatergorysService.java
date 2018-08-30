@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.business.dao.CatergorysDao;
+import com.business.dao.ProductsDao;
 import com.business.entity.Categorys;
 import com.business.util.DBHelper;
 import com.business.util.Page;
@@ -14,8 +15,10 @@ import com.business.util.Page;
 public class CatergorysService implements CategorysServiceInterface {
 
 	private CatergorysDao cd;
+	private ProductsDao pd;
 	public CatergorysService(){
 		cd = new CatergorysDao();
+		pd = new ProductsDao();
 	}
 	@Override
 	public boolean addCategorys(Categorys categorys) {
@@ -30,26 +33,42 @@ public class CatergorysService implements CategorysServiceInterface {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			cd.closeALL();
 		}
 		return f;
 	}
-
 	@Override
-	public boolean removeCategorys(Categorys categorys) {
-
-		boolean f = false;
+	public int removeCategorysByCid(int cid) {
 		Connection conn = DBHelper.getConnection();
 		try {
-			int i = cd.deleteCategorys(conn, categorys);
-			if(i>1){
-				f = true;
+			ResultSet set = pd.selecProductsByCid(conn, cid);
+			if(set.next()){
+				return -1;
+			}else{
+				conn.setAutoCommit(false);
+				int i = cd.deleteCategorysByCid(conn, cid);
+				conn.commit();
+				conn.setAutoCommit(true);
+				return i ;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			try {
+				conn.rollback();
+				conn.setAutoCommit(false);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			e.printStackTrace();
+		}finally{
+			cd.closeALL();
+			pd.closeALL();
 		}
-		return f;
+		return 0;
 	}
+	
 
 	@Override
 	public boolean updateCategorys(Categorys categorys) {
@@ -64,6 +83,8 @@ public class CatergorysService implements CategorysServiceInterface {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			cd.closeALL();
 		}
 		return f;
 	}
@@ -114,9 +135,9 @@ public class CatergorysService implements CategorysServiceInterface {
 			e.printStackTrace();
 		}finally{
 			cd.closeALL();
-		}
-		
+		}		
 		return page;
 	}
+
 
 }

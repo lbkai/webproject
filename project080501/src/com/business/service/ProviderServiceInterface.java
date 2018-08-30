@@ -10,7 +10,7 @@ public interface ProviderServiceInterface {
 	public boolean addProviders(Providers providers);
 
 	// 删除
-	public boolean removeProviders(Providers providers);
+	public int removeProvidersByPvid(int pvid);
 
 	// 修改
 	public boolean updateProviders(Providers providers);

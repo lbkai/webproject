@@ -12,7 +12,7 @@ public interface ProvidersDaoInterface {
 	public int insertProviders(Connection conn, Providers providers) throws SQLException;
 
 	// 删除
-	public int deleteProviders(Connection conn, Providers providers) throws SQLException;
+	public int deleteProviders(Connection conn, int pvid) throws SQLException;
 
 	// 修改
 	public int updateProviders(Connection conn, Providers providers) throws SQLException;

@@ -102,7 +102,7 @@ public class ProductsService implements ProductsServiceInterface{
 				String category_name = set.getString("category_name");
 				String income_time = set.getString("income_time");
 				
-				list.add(new Products(productID, product_name, income_price, new Providers(providerID, provider_name), quantity, sales_price, new Categorys(categoryID, category_name), income_time));
+				list.add(new Products(product_name, income_price, new Providers(providerID, provider_name), quantity, sales_price, new Categorys(categoryID, category_name), income_time));
 				
 			}
 		} catch (SQLException e) {
@@ -138,10 +138,7 @@ public class ProductsService implements ProductsServiceInterface{
 				
 				String income_time = set.getString("income_time");
 				
-				list.add(new Products(productID, product_name, income_price,
-						new Providers(providerID, provider_name), quantity,
-						sales_price, new Categorys(categoryID, category_name), 
-						income_time));
+				list.add(new Products(product_name, income_price, new Providers(providerID, provider_name), quantity, sales_price, new Categorys(categoryID, category_name), income_time));
 			}	
 			//三个参数有值
 			page.setList(list);

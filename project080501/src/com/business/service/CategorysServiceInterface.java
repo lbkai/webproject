@@ -10,7 +10,7 @@ public interface CategorysServiceInterface {
 	public boolean addCategorys(Categorys categorys);
 
 	// 删除
-	public boolean removeCategorys(Categorys categorys);
+	public int removeCategorysByCid(int	 cid);
 
 	// 修改
 	public boolean updateCategorys(Categorys categorys);

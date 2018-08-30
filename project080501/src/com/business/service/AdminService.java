@@ -54,8 +54,45 @@ public class AdminService implements AdminServiceInterface{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			ad.closeALL();
 		}
 		
+		return f;
+	}
+	
+	@Override
+	public boolean removeAdmin(Admin admin) {
+		Connection conn = DBHelper.getConnection();
+		boolean f = false;
+		try {
+			int i = ad.deleteAdmin(conn, admin);
+			if(i>0){
+				f = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			ad.closeALL();
+		}
+		return f;
+	}
+	@Override
+	public boolean updateAdmin(Admin admin) {
+		Connection conn = DBHelper.getConnection();
+		boolean f = false;
+		try {
+			int i = ad.updateAdmin(conn, admin);
+			if(i>0){
+				f = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			ad.closeALL();
+		}
 		return f;
 	}
 
@@ -82,6 +119,9 @@ public class AdminService implements AdminServiceInterface{
 		return list;
 		
 	}
+	
+	
+	
 	@Override
 	//调用方法的时候只有两个属性有值  currentPage ,   pageSize
 	public Page<Admin> findAllAdminByPage(Page<Admin> page) {
@@ -113,5 +153,6 @@ public class AdminService implements AdminServiceInterface{
 		return page;
 		
 	}
+
 
 }

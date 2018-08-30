@@ -13,7 +13,7 @@ public interface CategorysDaoInterface {
 	public int insertCategorys(Connection conn, Categorys categorys) throws SQLException;
 
 	// 删除
-	public int deleteCategorys(Connection conn, Categorys categorys) throws SQLException;
+	public int deleteCategorysByCid(Connection conn, int cid) throws SQLException;
 
 	// 修改
 	public int updateCategorys(Connection conn, Categorys categorys) throws SQLException;

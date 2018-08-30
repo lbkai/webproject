@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.business.entity.Products;
+import com.business.entity.Providers;
 import com.business.util.Page;
 
 public class ProductsDao extends BaseDao implements ProductsDaoInterface{
@@ -12,8 +13,8 @@ public class ProductsDao extends BaseDao implements ProductsDaoInterface{
 	@Override
 	public int insertProducts(Connection conn, Products products) throws SQLException {
 		// TODO Auto-generated method stub
-		String sql = "insert into products(productID,product_name,income_price,prividerID,quantity,sales_price,categoryID,income_time)values(?,?,?,?,?,?,?,?)";
-		Object[] objs = {products.getProductID(),products.getProduct_name(),products.getIncome_price(),products.getProductID(),products.getQuantity(),products.getSales_price(),products.getCategoryID(),products.getIncome_time()};
+		String sql = "insert into products(product_name,income_price,providerID,quantity,sales_price,categoryID,income_time)values(?,?,?,?,?,?,?)";
+		Object[] objs = {products.getProduct_name(),products.getIncome_price(),products.getProviders().getProviderID(),products.getQuantity(),products.getSales_price(),products.getCategorys().getCategoryID(),products.getIncome_time()};
 		return super.updateDate(conn, sql, objs);
 	}
 
@@ -27,8 +28,10 @@ public class ProductsDao extends BaseDao implements ProductsDaoInterface{
 
 	@Override
 	public int updateProducts(Connection conn, Products products) throws SQLException {
-		String sql = "update products set product_name = ? ,income_price = ? , providerID = ? , quantity = ?,sales_price = ? categoryID = ? ,income_time = ?";
-		Object[] objs = {products.getProduct_name(),products.getIncome_price(),products.getProductID(),products.getQuantity(),products.getSales_price(),products.getCategoryID() ,products.getIncome_time()};
+		String sql = "update products set product_name = ? ,income_price = ? , providerID = ? , quantity = ? , sales_price = ?, categoryID = ? ,income_time = ? where productID = ?";
+		Object[] objs = {products.getProduct_name(),products.getIncome_price(),products.getProviders().getProviderID(),
+				         products.getQuantity(),products.getSales_price(),
+				         products.getCategorys().getCategoryID() ,products.getIncome_time(),products.getProductID()};
 		return super.updateDate(conn, sql, objs);
 	}
 
@@ -61,6 +64,24 @@ public class ProductsDao extends BaseDao implements ProductsDaoInterface{
 			return set.getInt(1);
 		}
 		return 0;
+	}
+	/**
+	 * 验证providers数据是否可以删除
+	 */
+
+
+	@Override
+	public ResultSet selecProductsByPvid(Connection conn, int pvid) throws SQLException {
+		String sql = "select * from products where providerID= ?";
+		Object[] objs = {pvid};
+		return super.selectDate(conn, sql, objs);
+	}
+
+	@Override
+	public ResultSet selecProductsByCid(Connection conn, int cid) throws SQLException {
+		String sql = "select * from products where categoryID = ?";
+		Object[] objs = {cid};
+		return super.selectDate(conn, sql, objs);
 	}
 
 }

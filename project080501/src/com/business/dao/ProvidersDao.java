@@ -21,10 +21,10 @@ public class ProvidersDao extends BaseDao implements ProvidersDaoInterface {
 	}
 
 	@Override
-	public int deleteProviders(Connection conn, Providers providers) throws SQLException {
+	public int deleteProviders(Connection conn, int pvid) throws SQLException {
 		// TODO Auto-generated method stub
 		String sql = "delete  from providers where providerID = ? ";
-		Object[] objs = {providers.getProviderID()};
+		Object[] objs = {pvid};
 		return super.updateDate(conn, sql, objs);
 	}
 

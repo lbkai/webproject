@@ -6,7 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.business.dao.CatergorysDao;
+import com.business.dao.ProductsDao;
 import com.business.dao.ProvidersDao;
+import com.business.entity.Products;
 import com.business.entity.Providers;
 import com.business.util.DBHelper;
 import com.business.util.Page;
@@ -14,8 +17,10 @@ import com.business.util.Page;
 public class ProviderService implements ProviderServiceInterface {
 
 	private ProvidersDao pd;
+	private ProductsDao prd ;
 	public ProviderService(){
 		pd = new ProvidersDao();
+		prd = new ProductsDao();
 	}
 	@Override
 	public boolean addProviders(Providers providers) {
@@ -30,27 +35,49 @@ public class ProviderService implements ProviderServiceInterface {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			pd.closeALL();
 		}
 		
 		return f;		
 	}
 
 	@Override
-	public boolean removeProviders(Providers providers) {
+	public int removeProvidersByPvid(int pvid) {
 		// TODO Auto-generated method stub
-		boolean f = false;
+		
 		Connection conn = DBHelper.getConnection();
 		try {
-			int i = pd.deleteProviders(conn, providers);
-			if(i>0){
-				f=true;
+			//删除供应商之前做校验，校验供应商下是否有产品
+			ResultSet set = prd.selecProductsByPvid(conn, pvid);
+			if(set.next()){
+				return -1;
+				//目录下没有产品才可以删除
+			}else {
+				conn.setAutoCommit(false);
+				  int i = pd.deleteProviders(conn, pvid);
+				  conn.commit();
+				  conn.setAutoCommit(true);
+				  return i ;
+				
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException e1) {
+			try {
+				conn.rollback();
+				conn.setAutoCommit(false);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			e1.printStackTrace();
+		}finally{
+			prd.closeALL();
+			pd.closeALL();
 		}
+		return 0;
 		
-		return f;		
+		
+			
 	}
 	
 	
@@ -68,6 +95,8 @@ public class ProviderService implements ProviderServiceInterface {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			pd.closeALL();
 		}
 		
 		return f;		

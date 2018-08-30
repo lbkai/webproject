@@ -23,6 +23,15 @@ public class TestAll {
 		System.out.println(admin);
 		
 	}
+	public void testSelectAllAdmin() {
+		AdminService as = new AdminService();		
+		String name = "admin";
+		String password = "123456";
+		Admin admin = as.findAdminByLogin(new Admin(name , password));
+		System.out.println(admin);
+		
+	}
+	
 	@Test
 	public void testAdminByPage() {
 		AdminService as = new AdminService();
@@ -111,10 +120,10 @@ public class TestAll {
 	
 	@Test
 	public void testProvidersDel() {
-		int providerID = 5;		
+		int pvid = 1;		
 		ProviderService as = new ProviderService();		
 				
-		boolean providers = as.removeProviders(new Providers(providerID));
+		int providers = as.removeProvidersByPvid(pvid);
 		System.out.println(providers);
 		
 	}

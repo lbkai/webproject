@@ -11,6 +11,12 @@ public class Categorys {
 	}
 	
 	
+	public Categorys(int categoryID) {
+		super();
+		this.categoryID = categoryID;
+	}
+
+
 	public Categorys(int categoryID, String category_name) {
 		super();
 		this.categoryID = categoryID;

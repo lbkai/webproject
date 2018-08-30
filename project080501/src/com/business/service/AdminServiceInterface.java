@@ -11,6 +11,10 @@ public interface AdminServiceInterface {
 	public Admin findAdminByLogin(Admin admin);
 	//新增
 	public boolean addAdmin(Admin admin);
+	//删除
+	public boolean removeAdmin(Admin admin);
+	//修改
+	public boolean updateAdmin(Admin admin);
 	//查询所有
 	public List<Admin> findAllAdmin();
 	//查询所有分页
