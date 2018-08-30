@@ -17,6 +17,13 @@ public class Categorys {
 	}
 
 
+	public Categorys(String category_name, String category_desc) {
+		super();
+		this.category_name = category_name;
+		this.category_desc = category_desc;
+	}
+
+
 	public Categorys(int categoryID, String category_name) {
 		super();
 		this.categoryID = categoryID;
