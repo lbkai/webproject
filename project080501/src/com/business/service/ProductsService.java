@@ -102,8 +102,7 @@ public class ProductsService implements ProductsServiceInterface{
 				String category_name = set.getString("category_name");
 				String income_time = set.getString("income_time");
 				
-				list.add(new Products(product_name, income_price, new Providers(providerID, provider_name), quantity, sales_price, new Categorys(categoryID, category_name), income_time));
-				
+				list.add(new Products(productID,product_name, income_price, new Providers(providerID, provider_name), quantity, sales_price, new Categorys(categoryID, category_name), income_time));				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -138,7 +137,7 @@ public class ProductsService implements ProductsServiceInterface{
 				
 				String income_time = set.getString("income_time");
 				
-				list.add(new Products(product_name, income_price, new Providers(providerID, provider_name), quantity, sales_price, new Categorys(categoryID, category_name), income_time));
+				list.add(new Products(productID,product_name, income_price, new Providers(providerID, provider_name), quantity, sales_price, new Categorys(categoryID, category_name), income_time));
 			}	
 			//三个参数有值
 			page.setList(list);
@@ -153,4 +152,80 @@ public class ProductsService implements ProductsServiceInterface{
 		return page;
 	}
 
-}
+	/**
+	 * 验证providers数据是否可以删除
+	 */
+	@Override
+	public List<Products> findAllProductsByPvid(int providerID) {
+		// TODO Auto-generated method stub
+		Connection conn = DBHelper.getConnection();
+		List<Products> list  = new ArrayList<Products>();
+		try {
+			ResultSet set = pd.selecProductsByPvid(conn, providerID);
+			while(set.next()){
+				int productID = set.getInt("productID");
+				String product_name = set.getString("product_name");
+				double income_price = set.getDouble("income_price");
+				
+				//int providerID = set.getInt("providerID");
+				//String provider_name = set.getString("provider_name");
+				
+				int quantity = set.getInt("quantity");
+				double sales_price = set.getDouble("sales_price");
+				
+				int categoryID = set.getInt("categoryID");
+				//String category_name = set.getString("category_name");
+				String income_time = set.getString("income_time");
+				
+				list.add(new Products(productID,product_name, income_price, new Providers(providerID), quantity, sales_price, new Categorys(categoryID), income_time));				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			pd.closeALL();
+		}
+		
+		return list;
+	}
+	
+
+	/**
+	 * 验证categorys数据是否可以删除
+	 */
+	@Override
+	public List<Products> findAllProductsBypvidCid(int categoryID) {
+		// TODO Auto-generated method stub
+		Connection conn = DBHelper.getConnection();
+		List<Products> list  = new ArrayList<Products>();
+		try {
+			ResultSet set = pd.selecProductsByCid(conn, categoryID);
+			while(set.next()){
+				int productID = set.getInt("productID");
+				String product_name = set.getString("product_name");
+				double income_price = set.getDouble("income_price");
+				
+				int providerID = set.getInt("providerID");
+				//String provider_name = set.getString("provider_name");
+				
+				int quantity = set.getInt("quantity");
+				double sales_price = set.getDouble("sales_price");
+				
+				//int categoryID = set.getInt("categoryID");
+				//String category_name = set.getString("category_name");
+				String income_time = set.getString("income_time");
+				
+				list.add(new Products(productID,product_name, income_price, new Providers(providerID), quantity, sales_price, new Categorys(categoryID), income_time));				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			pd.closeALL();
+		}
+		
+		return list;
+	}
+	}
+
+

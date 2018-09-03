@@ -1,5 +1,6 @@
 package com.business.view;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
@@ -8,26 +9,76 @@ import org.junit.Test;
 import com.business.entity.Categorys;
 import com.business.entity.Products;
 import com.business.entity.Providers;
+import com.business.excepption.NotNullException;
+import com.business.excepption.ValueExistException;
 import com.business.service.ProductsService;
 import com.business.util.Page;
 
 public class ProductsProcess {
 	
 	 ProductsService ps = new ProductsService();
+	 
+	 public  void checkProductID(int productID) throws ValueExistException{
+		 /**
+		  * 判断productID是否存在
+		  */
+//		 List<Products> list = ps.findAllProducts();
+//		 Iterator<Products> it = list.iterator();
+//		 for (Products products : list) {
+//			if(products.getProductID() != productID){
+//				
+//			}
+//		}
+		 
+			for(int i = 0;i<ps.findAllProducts().size();i++){
+				if(!(ps.findAllProducts().get(i).getProductID() == productID) && i == ps.findAllProducts().size() - 1){
+					throw new ValueExistException();
+				}
+			}
+	 }
+	 public void checkProviderID(int providerID) throws ValueExistException{
+		 /**
+		  * 判断providerID是否存在
+		  */
+		 for(int i = 0 ;i<ps.findAllProducts().size();i++){
+				
+				if(!((ps.findAllProducts().get(i).getProviders().getProviderID()) == providerID) && i == ps.findAllProducts().size()-1){
+					throw new ValueExistException();
+				}
+			}
+	 }
+	 public void checkcategoryID(int categoryID) throws ValueExistException{
+		 /**
+		  * 判断categoryID是否存在
+		  */
+		   for(int i = 0 ;i<ps.findAllProducts().size();i++){
+				if(!((ps.findAllProducts().get(i).getCategorys().getCategoryID()) == categoryID)&&i == ps.findAllProducts().size()-1){
+					throw new ValueExistException();
+				}
+			}
+	 }
+	 
+	 
 	@Test
-	public  void process(){
+	public  void process() throws NotNullException, ValueExistException{
 		while(true){
 			System.out.println("1:增加产品   2:删除产品      3：修改产品   4：查产品     5:分页查找   6：退出");
 			String op = Process.input();
+			try{
 			if("1".equals(op)){
+				
 				System.out.println("输入产品名：");
 				String product_name = Process.input();
+				if(product_name.length() == 0){
+					throw new NotNullException();			
+			      }
 				System.out.println("输入产品进价：");
 				String productprice = Process.input();
 				double income_price = Double.parseDouble(productprice);
 				System.out.println("输入供应商id：");
 				String providerid = Process.input();
-				int providerID = Integer.parseInt(providerid);
+				int providerID = Integer.parseInt(providerid);				
+				checkProviderID(providerID);				
 				System.out.println("输入产品数量：");
 				String quanti = Process.input();
 				int quantity = Integer.parseInt(quanti);
@@ -36,28 +87,48 @@ public class ProductsProcess {
 				double sales_price = Double.parseDouble(salesprice);
 				System.out.println("输入产品种类id：");
 				String categoryid = Process.input();
-				int categoryID = Integer.parseInt(categoryid);
+				int categoryID = Integer.parseInt(categoryid);				
+	           checkcategoryID(categoryID);	 	           
 				System.out.println("输入采购时间：");
-				String income_time = Process.input();			
-				ps.addProducts(new Products(product_name, income_price, new Providers(providerID), quantity, sales_price, new Categorys(categoryID), income_time));
+				String income_time = Process.input();
+				if(income_time.trim().length() == 0){
+					throw new NotNullException();			
+			      }
+			
+				ps.addProducts(new Products(product_name, income_price, new Providers(providerID), quantity, sales_price, new Categorys(categoryID), income_time));			
+								
 				
 			}else if("2".equals(op)){
 				System.out.println("输入要删除产品的id:");
 				String productid = Process.input();
 				int productID = Integer.parseInt(productid);
+				
+			    checkProductID(productID);
+				
 				ps.removeProducts(new Products(productID));
-			}else if("3".equals(op)){
+			  }else if("3".equals(op)){
 				System.out.println("输入要修改产品的id:");
 				String productid = Process.input();
 				int productID = Integer.parseInt(productid);
+				
+				checkProductID(productID);
+				
 				System.out.println("输入修改的产品名：");
 				String product_name = Process.input();
+				if(product_name.length() == 0){
+					throw new NotNullException();			
+			      }
+				
+				
 				System.out.println("输入修改的产品进价：");
 				String productprice = Process.input();
 				double income_price = Double.parseDouble(productprice);
 				System.out.println("输入修改的供应商id：");
 				String providerid = Process.input();
 				int providerID = Integer.parseInt(providerid);
+				
+				checkProviderID(providerID);
+				
 				System.out.println("输入修改的产品数量：");
 				String quanti = Process.input();
 				int quantity = Integer.parseInt(quanti);
@@ -67,8 +138,14 @@ public class ProductsProcess {
 				System.out.println("输入修改的产品种类id：");
 				String categoryid = Process.input();
 				int categoryID = Integer.parseInt(categoryid);
+				
+				checkcategoryID(categoryID);
+				
 				System.out.println("输入修改的采购时间：");
 				String income_time = Process.input();
+				if(income_time.trim().length() == 0){
+					throw new NotNullException();			
+			      }
 				
 				ps.updateProducts(new Products(productID,product_name, income_price, new Providers(providerID), quantity, sales_price, new Categorys(categoryID), income_time));
 			}else if("4".equals(op)){
@@ -131,6 +208,10 @@ public class ProductsProcess {
 				break;
 			}
 			
+		}catch(NumberFormatException e){
+			//e.printStackTrace();
+			System.out.println("数字格式异常！！");
 		}
 	}
+   }
 }

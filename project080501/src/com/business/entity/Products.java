@@ -97,8 +97,8 @@ public class Products {
 	@Override
 	public String toString() {
 		return "Products [productID=" + productID + ", product_name=" + product_name + ", income_price=" + income_price
-				+ ", providers=" + providers + ", quantity=" + quantity + ", sales_price=" + sales_price
-				+ ", categorys=" + categorys + ", income_time=" + income_time + "]";
+				+ ", providers=" + providers.getProvider_name() + ", quantity=" + quantity + ", sales_price=" + sales_price
+				+ ", categorys=" + categorys.getCategory_name() + ", income_time=" + income_time + "]";
 	}			
 	
 }

@@ -23,14 +23,7 @@ public class TestAll {
 		System.out.println(admin);
 		
 	}
-	public void testSelectAllAdmin() {
-		AdminService as = new AdminService();		
-		String name = "admin";
-		String password = "123456";
-		Admin admin = as.findAdminByLogin(new Admin(name , password));
-		System.out.println(admin);
-		
-	}
+	
 	
 	@Test
 	public void testAdminByPage() {

@@ -111,7 +111,6 @@ public class AdminService implements AdminServiceInterface{
 				list.add(new Admin(admin_id,admin_name,admin_password,date));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			ad.closeALL();

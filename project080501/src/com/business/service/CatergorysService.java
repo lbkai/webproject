@@ -28,7 +28,7 @@ public class CatergorysService implements CategorysServiceInterface {
 		try {
 			int i = cd.insertCategorys(conn, categorys);
 			if(i>0){
-				f=true;
+				f = true;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -94,9 +94,9 @@ public class CatergorysService implements CategorysServiceInterface {
 
 		Connection conn = DBHelper.getConnection();
 		List<Categorys> list = new ArrayList<Categorys>();
-		
+		ResultSet set;
 		try {
-			ResultSet set = cd.selectAllCategorys(conn);
+			 set = cd.selectAllCategorys(conn);
 			while(set.next()){
 				int categoryID = set.getInt("categoryID");
 				String category_name = set.getString("category_name");

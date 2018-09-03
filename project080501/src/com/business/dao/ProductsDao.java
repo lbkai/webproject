@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.business.entity.Products;
-import com.business.entity.Providers;
 import com.business.util.Page;
 
 public class ProductsDao extends BaseDao implements ProductsDaoInterface{
@@ -38,9 +37,9 @@ public class ProductsDao extends BaseDao implements ProductsDaoInterface{
 	@Override
 	public ResultSet selectAllProducts(Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
-		String sql = "select p.*,c.category_name,pro.provider_name "+
-                " from products p,categorys c,providers pro "+
-                " where p.categoryID = c.categoryID and p.productID = pro.providerID ";
+		String sql = "select p.* ,c.category_name , pro.provider_name " +
+                " from products p,categorys c,providers pro " +
+                " where p.categoryID = c.categoryID and p.providerID = pro.providerID ";
 		
 		return super.selectDate(conn, sql, null);
 	}
@@ -48,9 +47,9 @@ public class ProductsDao extends BaseDao implements ProductsDaoInterface{
 	@Override
 	public ResultSet selectAllProductsByPage(Connection conn, Page<Products> page) throws SQLException {
 		// TODO Auto-generated method stub
-		String sql ="select p.*,c.category_name,pro.provider_name "+
-                    " from products p,categorys c,providers pro "+
-                    " where p.categoryID = c.categoryID and p.productID = pro.providerID limit ?,?";
+		String sql ="select p.*,c.category_name,pro.provider_name " +
+                    " from products p,categorys c,providers pro " +
+                    " where p.categoryID = c.categoryID and p.providerID = pro.providerID limit ? , ?";
 		Object[] objs ={(page.getCurrentPage()-1)*page.getPageSize(),page.getPageSize()};
 		return super.selectDate(conn, sql, objs);
 	}
@@ -58,13 +57,15 @@ public class ProductsDao extends BaseDao implements ProductsDaoInterface{
 	@Override
 	public int selectAllProductsRecored(Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
+		int i = 0;
 		String sql = "select count(*) from products";
 		ResultSet set = super.selectDate(conn, sql, null);
 		if(set.next()){
-			return set.getInt(1);
+			i = set.getInt(1);
 		}
-		return 0;
+		return i;
 	}
+	
 	/**
 	 * 验证providers数据是否可以删除
 	 */
@@ -76,7 +77,9 @@ public class ProductsDao extends BaseDao implements ProductsDaoInterface{
 		Object[] objs = {pvid};
 		return super.selectDate(conn, sql, objs);
 	}
-
+	/**
+	 * 验证categorys数据是否可以删除
+	 */
 	@Override
 	public ResultSet selecProductsByCid(Connection conn, int cid) throws SQLException {
 		String sql = "select * from products where categoryID = ?";

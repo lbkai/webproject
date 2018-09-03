@@ -6,10 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.business.dao.CatergorysDao;
+
 import com.business.dao.ProductsDao;
 import com.business.dao.ProvidersDao;
-import com.business.entity.Products;
 import com.business.entity.Providers;
 import com.business.util.DBHelper;
 import com.business.util.Page;

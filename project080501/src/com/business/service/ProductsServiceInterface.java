@@ -16,6 +16,12 @@ public interface ProductsServiceInterface {
 	public List<Products> findAllProducts();
 	//分页  查找
 	public Page<Products> findAllProductByPage(Page<Products> page);
-	
-	
+	/**
+	 * 验证providers数据是否可以删除
+	 */
+	public List<Products> findAllProductsByPvid(int providerID);
+	/**
+	 * 验证categorys数据是否可以删除
+	 */
+	public List<Products> findAllProductsBypvidCid(int categoryID);
 }

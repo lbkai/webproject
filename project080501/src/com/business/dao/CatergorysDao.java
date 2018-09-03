@@ -32,7 +32,7 @@ public class CatergorysDao extends BaseDao implements CategorysDaoInterface {
 
 	@Override
 	public ResultSet selectAllCategorys(Connection conn) throws SQLException {
-		String sql = "select * from categorys";
+		String sql = "select * from categorys ";
 		return super.selectDate(conn, sql, null);
 	}
 
