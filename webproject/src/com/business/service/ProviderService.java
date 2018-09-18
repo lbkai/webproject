@@ -40,6 +40,27 @@ public class ProviderService implements ProviderServiceInterface {
 		
 		return f;		
 	}
+	
+	public int  addProvidersByName(Providers providers) {
+
+		Connection conn = DBHelper.getConnection();
+		try {
+			ResultSet set = pd.selectProvidersByName(conn, providers.getProvider_name());
+			if(!set.next()) {
+				return pd.insertProviders(conn, providers);				
+			}else {
+				return -1;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			pd.closeALL();
+		}
+		
+		return 0;		
+	}
 
 	@Override
 	public int removeProvidersByPvid(int pvid) {
@@ -128,6 +149,32 @@ public class ProviderService implements ProviderServiceInterface {
 			return list;			
 	}
 
+	//通过id查询
+	@Override
+	public Providers findProviderById(int id) {
+		// TODO Auto-generated method stub
+			Connection conn = DBHelper.getConnection();
+			try {
+				ResultSet set = pd.selectProvidersById(conn, id);
+				if(set.next()){
+					int providerID = set.getInt("providerID");
+					String provider_name = set.getString("provider_name");
+					String provider_add = set.getString("provider_add");
+					String provider_tel = set.getString("provider_tel");
+					String account = set.getString("account");
+					String email = set.getString("email");
+					return new Providers(providerID, provider_name, provider_add, provider_tel, account, email);
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				pd.closeALL();
+			}
+			return null;			
+	}
+			
 	@Override
 	public Page<Providers> findtAllProvidersByPage(Page<Providers> page) {
 		// TODO Auto-generated method stub

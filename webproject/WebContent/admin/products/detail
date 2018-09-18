@@ -1,0 +1,21 @@
+显示产品
+
+1、请求service层的方法
+2、把得到的数据给到显示的页面
+3、把数据显示出来
+
+
+修改产品
+
+1: 请求service的方法(得到: 1:修改的产品的数据; 2:所有的供应商 和 3:所有的目录)
+2: 把得到数据给修改页面
+	request.setAttribute("p", p);
+	request.setAttribute("proList", list);
+	request.setAttribute("cateList", list2);
+	
+	request.getRequestDispatcher("editProduct.jsp").forward(request, response);
+3: 把修改表单提交
+4: 得到反馈信息
+5: 返回到显示所有产品的页面 
+
+
